@@ -41,6 +41,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { upsertTransaction } from "./_actions/upsert-transaction";
+import { v4 as uuidv4 } from "uuid";
 
 interface UpsertTransactionDialogProps {
   isOpen: boolean;
@@ -96,7 +97,8 @@ const UpsertTransactionDialog = ({
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await upsertTransaction({ ...data, id: transactionId });
+      console.log(data);
+      await upsertTransaction({ ...data, id: transactionId ?? uuidv4() });
       setIsOpen(false);
       form.reset();
     } catch (error) {
