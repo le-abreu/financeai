@@ -1,14 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 interface LinkAppProps {
   pathname: string;
   display: string;
+  useParams: boolean;
 }
 
-const LinkApp: React.FC<LinkAppProps> = ({ pathname, display }) => {
+const LinkApp: React.FC<LinkAppProps> = ({ pathname, display, useParams }) => {
+  const searchParams = useSearchParams();
+  const month = searchParams.get("month");
+  const year = searchParams.get("year");
+
   const currentPathname = usePathname();
 
   const linkClass =
@@ -17,7 +22,12 @@ const LinkApp: React.FC<LinkAppProps> = ({ pathname, display }) => {
       : "text-muted-foreground";
 
   return (
-    <Link href={pathname} className={linkClass}>
+    <Link
+      href={
+        useParams ? `${pathname}?month=${month}&year=${year}` : `${pathname}`
+      }
+      className={linkClass}
+    >
       {display}
     </Link>
   );

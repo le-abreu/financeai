@@ -38,11 +38,11 @@ const TimeSelect = () => {
   }
 
   const handleMonthChange = (month: string) => {
-    push(`/?month=${month}&year=${year}`);
+    push(`/transactions?month=${month}&year=${year}`);
   };
 
   const handleYearChange = (year: string) => {
-    push(`/?month=${month}&year=${year}`);
+    push(`/transactions?month=${month}&year=${year}`);
   };
 
   return (

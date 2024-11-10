@@ -9,9 +9,16 @@ import Link from "next/link";
 
 interface LastTransactionsProps {
   lastTransactions: Transaction[];
+  searchParams: {
+    month: string;
+    year: string;
+  };
 }
 
-const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
+const LastTransactions = ({
+  lastTransactions,
+  searchParams: { month, year },
+}: LastTransactionsProps) => {
   const getAmountColor = (transaction: Transaction) => {
     if (transaction.type === TransactionType.EXPENSE) {
       return "text-red-500";
@@ -32,7 +39,9 @@ const LastTransactions = ({ lastTransactions }: LastTransactionsProps) => {
       <CardHeader className="flex-row items-center justify-between">
         <CardTitle className="font-bold">Últimas Transações</CardTitle>
         <Button variant="outline" className="rounded-full font-bold" asChild>
-          <Link href="/transactions">Ver mais</Link>
+          <Link href={`/transactions?month=${month}&year=${year}`}>
+            Ver mais
+          </Link>
         </Button>
       </CardHeader>
       <CardContent className="space-y-6">

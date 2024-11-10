@@ -12,19 +12,26 @@ import LastTransactions from "./_components/last-transactions";
 interface HomeProps {
   searchParams: {
     month: string;
+    year: string;
   };
 }
 
-const Home = async ({ searchParams: { month } }: HomeProps) => {
+const Home = async ({ searchParams: { month, year } }: HomeProps) => {
   const { userId } = await auth();
   if (!userId) {
     redirect("/login");
   }
+
   const monthIsInvalid = !month || !isMatch(month, "MM");
+  const yearIsInvalid = !year || !isMatch(year, "yyyy");
   if (monthIsInvalid) {
-    redirect(`?month=${new Date().getMonth() + 1}`);
+    redirect(`?month=${new Date().getMonth() + 1}&year=${year}`);
   }
-  const dashboard = await getDashboard(month);
+  if (yearIsInvalid) {
+    redirect(`?month=${month}&year=${new Date().getFullYear()}`);
+  }
+
+  const dashboard = await getDashboard(month, year);
   return (
     <>
       <Navbar />
@@ -35,7 +42,7 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
         </div>
         <div className="grid h-full grid-cols-[2fr,1fr] gap-6 overflow-hidden">
           <div className="flex flex-col gap-6 overflow-hidden">
-            <SummaryCards month={month} {...dashboard} />
+            <SummaryCards month={month} year={year} {...dashboard} />
             <div className="grid h-full grid-cols-3 grid-rows-1 gap-6 overflow-hidden">
               <TransactionsPieChart {...dashboard} />
               <ExpensesPerCategory
@@ -43,7 +50,10 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
               />
             </div>
           </div>
-          <LastTransactions lastTransactions={dashboard.lastTransactions} />
+          <LastTransactions
+            lastTransactions={dashboard.lastTransactions}
+            searchParams={{ month, year }}
+          />
         </div>
       </div>
     </>

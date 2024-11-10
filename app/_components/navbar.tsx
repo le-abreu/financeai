@@ -10,9 +10,17 @@ const Navbar = () => {
       {/* ESQUERDA */}
       <div className="flex items-center gap-10">
         <Image src="/logo.svg" width={173} height={39} alt="Finance AI" />
-        <LinkApp pathname="/" display="Dashboard" />
-        <LinkApp pathname="/transactions" display="Transações" />
-        <LinkApp pathname="/subscription" display="Assinatura" />
+        <LinkApp pathname="/" display="Dashboard" useParams={true} />
+        <LinkApp
+          pathname="/transactions"
+          display="Transações"
+          useParams={true}
+        />
+        <LinkApp
+          pathname="/subscription"
+          display="Assinatura"
+          useParams={true}
+        />
       </div>
       {/* DIREITA */}
       <UserButton showName />
