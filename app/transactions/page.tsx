@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import TimeSelect from "@/app/_components/time-select";
 import { isMatch } from "date-fns";
+import { canUserAddTransaction } from "../_data/can-user-add-transaction";
 
 interface TransactionsPageProps {
   searchParams: {
@@ -42,6 +43,7 @@ const TransactionsPage = async ({
       },
     },
   });
+  const userCanAddTransaction = await canUserAddTransaction();
   return (
     <>
       <Navbar />
@@ -51,7 +53,9 @@ const TransactionsPage = async ({
           <h1 className="text-2xl font-bold">Transações</h1>
           <div className="flex justify-between space-x-4">
             <TimeSelect basePath="/transactions" />
-            <AddTransactionButton />
+            <AddTransactionButton
+              userCanAddTransaction={userCanAddTransaction}
+            />
           </div>
         </div>
         <ScrollArea className="rounded-md border">
