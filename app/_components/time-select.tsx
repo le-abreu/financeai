@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/app/_components/ui/select";
+} from "./ui/select";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const MONTH_OPTIONS = [
@@ -23,8 +23,11 @@ const MONTH_OPTIONS = [
   { value: "11", label: "November" },
   { value: "12", label: "December" },
 ];
+interface TimeSelectProps {
+  basePath: string;
+}
 
-const TimeSelect = () => {
+const TimeSelect = ({ basePath }: TimeSelectProps) => {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const month = searchParams.get("month");
@@ -37,12 +40,12 @@ const TimeSelect = () => {
     YEARS_OPTIONS.push({ value: `${year}`, label: `${year}` });
   }
 
-  const handleMonthChange = (month: string) => {
-    push(`/?month=${month}&year=${year}`);
+  const handleMonthChange = (newMonth: string) => {
+    push(`${basePath}?month=${newMonth}&year=${year}`);
   };
 
-  const handleYearChange = (year: string) => {
-    push(`/?month=${month}&year=${year}`);
+  const handleYearChange = (newYear: string) => {
+    push(`${basePath}?month=${month}&year=${newYear}`);
   };
 
   return (

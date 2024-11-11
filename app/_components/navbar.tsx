@@ -19,7 +19,7 @@ const Navbar = () => {
         <LinkApp
           pathname="/subscription"
           display="Assinatura"
-          useParams={true}
+          useParams={false}
         />
       </div>
       {/* DIREITA */}
