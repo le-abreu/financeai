@@ -49,9 +49,9 @@ const TransactionsPage = async ({
       <Navbar />
       <div className="flex flex-col space-y-6 overflow-hidden p-6">
         {/* TÍTULO E BOTÃO */}
-        <div className="flex w-full items-center justify-between">
+        <div className="items-left flex w-full flex-col justify-between space-y-4 md:flex-row md:space-y-0">
           <h1 className="text-2xl font-bold">Transações</h1>
-          <div className="flex justify-between space-x-4">
+          <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-x-4 md:space-y-0">
             <TimeSelect basePath="/transactions" />
             <AddTransactionButton
               userCanAddTransaction={userCanAddTransaction}
