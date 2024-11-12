@@ -48,7 +48,7 @@ export const generateAiReport = async ({
     )
     .join(";")}`;
   const completion = await openAi.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: `${process.env.OPENAI_MODEL}`,
     messages: [
       {
         role: "system",
