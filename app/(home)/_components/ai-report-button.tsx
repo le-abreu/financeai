@@ -1,5 +1,6 @@
 "use client";
 
+import { jsPDF } from "jspdf";
 import { Button } from "@/app/_components/ui/button";
 import {
   Dialog,
@@ -37,11 +38,49 @@ const AiReportButton = ({
       const aiReport = await generateAiReport({ month, year });
       console.log({ aiReport });
       setReport(aiReport);
+      if (aiReport) {
+        downloadPdf(aiReport);
+      }
     } catch (error) {
       console.error(error);
     } finally {
       setReportIsLoading(false);
     }
+  };
+
+  const downloadPdf = (reportContent: string) => {
+    if (!reportContent) return;
+
+    const doc = new jsPDF();
+
+    doc.text("Relatório Finance: IA", 20, 20); // Adjust position as necessary
+
+    const margins = {
+      top: 30,
+      bottom: 20,
+      left: 20,
+      width: 180,
+    };
+
+    const lines: string[] = doc.splitTextToSize(reportContent, margins.width); // Explicitly declare lines as string[]
+    let cursorY = margins.top + 10; // Initial vertical position after the title
+
+    lines.forEach((line: string) => {
+      // Removed the unused 'index' parameter
+      if (cursorY + 10 > doc.internal.pageSize.height - margins.bottom) {
+        doc.addPage();
+        cursorY = margins.top; // Reset cursor Y to top margin
+      }
+      doc.text(line, margins.left, cursorY);
+      cursorY += 10; // Increment position by line height
+    });
+
+    const now = new Date();
+    const year = now.getFullYear(); // Get current year
+    const month = (now.getMonth() + 1).toString().padStart(2, "0"); // Get current month and ensure it is in two digits
+    const fileName = `${year}_${month}_report_finance.pdf`; // Construct file name
+
+    doc.save(fileName); // Save the PDF with a dynamic name
   };
 
   return (
