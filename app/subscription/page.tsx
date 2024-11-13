@@ -85,12 +85,12 @@ const SubscriptionPage = async () => {
                 </Badge>
               )}
               <h2 className="text-center text-2xl font-semibold">
-                Plano Premium - Anual
+                Plano Premium - Ano
               </h2>
               <div className="flex items-center justify-center gap-3">
                 <span className="text-4xl">R$</span>
                 <span className="text-6xl font-semibold">215</span>
-                <div className="text-2xl text-muted-foreground">/anual</div>
+                <div className="text-2xl text-muted-foreground">/ano</div>
               </div>
             </CardHeader>
             <CardContent className="space-y-6 py-8">
