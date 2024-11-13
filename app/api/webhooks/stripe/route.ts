@@ -26,6 +26,7 @@ export const POST = async (request: Request) => {
       const { customer, subscription, subscription_details } =
         event.data.object;
       const clerkUserId = subscription_details?.metadata?.clerk_user_id;
+      const clerkPlanType = subscription_details?.metadata?.plan_type;
       if (!clerkUserId) {
         return NextResponse.error();
       }
@@ -35,6 +36,7 @@ export const POST = async (request: Request) => {
           stripeSubscriptionId: subscription,
         },
         publicMetadata: {
+          subscriptionPlanType: clerkPlanType,
           subscriptionPlan: "premium",
         },
       });
@@ -56,6 +58,7 @@ export const POST = async (request: Request) => {
         },
         publicMetadata: {
           subscriptionPlan: null,
+          subscriptionPlanType: null,
         },
       });
     }

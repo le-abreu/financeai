@@ -14,7 +14,8 @@ const SubscriptionPage = async () => {
   }
   const user = await clerkClient().users.getUser(userId);
   const currentMonthTransactions = await getCurrentMonthTransactions();
-  const hasPremiumPlan = user.publicMetadata.subscriptionPlan == "premium";
+  const hasPremiumPlan = user.publicMetadata.subscriptionPlan === "premium";
+  const hasPremiumPlanType = user.publicMetadata.subscriptionPlanType;
   return (
     <>
       <Navbar />
@@ -49,7 +50,7 @@ const SubscriptionPage = async () => {
 
           <Card className="w-full sm:w-[450px]">
             <CardHeader className="relative border-b border-solid py-8">
-              {hasPremiumPlan && (
+              {hasPremiumPlan && hasPremiumPlanType === "mensal" && (
                 <Badge className="absolute left-4 top-12 bg-primary/10 text-primary">
                   Ativo
                 </Badge>
@@ -72,7 +73,36 @@ const SubscriptionPage = async () => {
                 <CheckIcon className="text-primary" />
                 <p>Relatórios de IA</p>
               </div>
-              <AcquirePlanButton />
+              <AcquirePlanButton code="mensal" />
+            </CardContent>
+          </Card>
+
+          <Card className="w-full sm:w-[450px]">
+            <CardHeader className="relative border-b border-solid py-8">
+              {hasPremiumPlan && hasPremiumPlanType === "anual" && (
+                <Badge className="absolute left-4 top-12 bg-primary/10 text-primary">
+                  Ativo
+                </Badge>
+              )}
+              <h2 className="text-center text-2xl font-semibold">
+                Plano Premium - Anual
+              </h2>
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-4xl">R$</span>
+                <span className="text-6xl font-semibold">215</span>
+                <div className="text-2xl text-muted-foreground">/anual</div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-6 py-8">
+              <div className="flex items-center gap-2">
+                <CheckIcon className="text-primary" />
+                <p>Transações ilimitadas</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckIcon className="text-primary" />
+                <p>Relatórios de IA</p>
+              </div>
+              <AcquirePlanButton code="anual" />
             </CardContent>
           </Card>
         </div>
