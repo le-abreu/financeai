@@ -29,8 +29,7 @@ export const generateAiReport = async ({
   const openAi = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
-
-  // Pegar todas as transações do mês especificado
+  // pegar as transações do mês recebido
   const transactions = await db.transaction.findMany({
     where: {
       userId,
@@ -40,18 +39,14 @@ export const generateAiReport = async ({
       },
     },
   });
-
-  // Limitar a quantidade de informações detalhadas para o prompt, reduzindo o risco de timeout
-  const transactionsSummary = transactions
+  // mandar as transações para o ChatGPT e pedir para ele gerar um relatório com insights
+  const content = `Gere um relatório com insights sobre as minhas finanças, com dicas e orientações de como melhorar minha vida financeira. As transações estão divididas por ponto e vírgula. A estrutura de cada uma é {DATA}-{TIPO}-{VALOR}-{CATEGORIA}. São elas:
+  ${transactions
     .map(
       (transaction) =>
         `${transaction.date.toLocaleDateString("pt-BR")}-R$${transaction.amount}-${transaction.type}-${transaction.category}`,
     )
-    .join("; ");
-
-  const content = `Gere um relatório com insights sobre as minhas finanças, com dicas e orientações de como melhorar minha vida financeira. As transações estão divididas por ponto e vírgula. A estrutura de cada uma é {DATA}-{TIPO}-{VALOR}-{CATEGORIA}. São elas:
-  ${transactionsSummary}`;
-
+    .join(";")}`;
   try {
     // Chamada para a API OpenAI
     const completion = await openAi.chat.completions.create({
@@ -67,8 +62,6 @@ export const generateAiReport = async ({
           content,
         },
       ],
-      max_tokens: 1000, // Definindo o máximo de tokens para garantir resposta completa
-      temperature: 0.7, // Controle da criatividade da resposta
     });
 
     // Retornar o relatório gerado pelo ChatGPT
