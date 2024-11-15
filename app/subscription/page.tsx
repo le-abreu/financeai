@@ -57,6 +57,7 @@ const SubscriptionPage = async () => {
               )}
               <h2 className="text-center text-2xl font-semibold">
                 Plano Premium
+                <div className="text-2xl text-muted-foreground">/mês</div>
               </h2>
               <div className="flex items-center justify-center gap-3">
                 <span className="text-4xl">R$</span>
@@ -84,8 +85,8 @@ const SubscriptionPage = async () => {
                   Ativo
                 </Badge>
               )}
-              <h2 className="text-center text-2xl font-semibold">
-                Plano Premium - Ano
+              <h2 className="text-center text-3xl font-semibold">
+                Plano Premium
               </h2>
               <div className="flex items-center justify-center gap-3">
                 <span className="text-4xl">R$</span>

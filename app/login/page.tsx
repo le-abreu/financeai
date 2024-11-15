@@ -11,7 +11,7 @@ const LoginPage = async () => {
     redirect("/");
   }
   return (
-    <div className="grid h-full grid-cols-2">
+    <div className="grid h-full grid-rows-2 justify-center">
       {/* ESQUERDA */}
       <div className="mx-auto flex h-full max-w-[550px] flex-col justify-center p-8">
         <Image
@@ -27,6 +27,7 @@ const LoginPage = async () => {
           monitorar suas movimentações, e oferecer insights personalizados,
           facilitando o controle do seu orçamento.
         </p>
+
         <SignInButton>
           <Button variant="outline">
             <LogInIcon className="mr-2" />
@@ -34,8 +35,8 @@ const LoginPage = async () => {
           </Button>
         </SignInButton>
       </div>
-      {/* DIREITA */}
-      <div className="relative h-full w-full">
+      {/* DIREITA 
+            <div className="relative h-full w-full">
         <Image
           src="/login.png"
           alt="Faça login"
@@ -43,6 +44,7 @@ const LoginPage = async () => {
           className="object-cover"
         />
       </div>
+      */}
     </div>
   );
 };
